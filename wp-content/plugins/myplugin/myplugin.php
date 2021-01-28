@@ -5,7 +5,7 @@ Plugin Name: Mon premier plugin
 Plugin URI: https://github.com/Mike031289/mon_premier_plugin
 Description:Ceci est mon premier plugin que j'ai crée au tp lors de ma formation
 Author: Adjoukou AGBELOU
-Version: 1.7.2
+Version: 1.0
 Author URI: http://mon_site.tt/
 */
 

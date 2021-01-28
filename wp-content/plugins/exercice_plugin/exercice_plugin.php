@@ -5,7 +5,7 @@ Plugin Name: exercice plugin
 Plugin URI: https://github.com/Mike031289/mon_premier_plugin
 Description:Ceci est mon premier plugin que j'ai crée au tp lors de ma formation
 Author: Adjoukou AGBELOU
-Version: 1.7.2
+Version: 1.0
 Author URI: http://mon_site.tt/
 */
     //Sa désactive les accès direct au fichier sur lequel on se trouve
@@ -83,3 +83,48 @@ function  exercice_plugin_sous_menu() {
                         
 }
 add_action('admin_menu', 'exercice_plugin_sous_menu');
+
+//Planifions la page qu'on veut créer
+//On va créer une page avec 2 block
+    //1- Personnalisation de la page de login
+        //1-a URL pour le lien de login (Zone de texte)
+        //1-b Un attribue titre pour lelien de login (Zone de texte)
+        //1-c On aura une zone d'activation du style personnalisé (bouton radio)
+        //1-d Zonz de message de login personnalisé (texte area)
+    //2- Personnalisation de la zonne admin
+        //2-a Texte de pied de page personnalisé (zone de texte)
+        //2-b supprimer les items de la barre d'outils (une checkbox)
+        //2-c Choix de la couleur d'administration (select)
+
+//POur définir l'ensemble des paramètres de la page ci-dessu dans WordPress, il faut les enregistrer grâce à la fonction register_setting()
+function exercice_plugin_register_setting(){
+    register_setting(
+                        'exercice_plugin_options', //represente le goupe d'options défini dans settings_fields('exercice_plugin_options')
+                        'exercice_plugin_options', //nom pour netrouver les options dans la base de données
+                        'exercice_plugin_callback_validate_option' //fonction de callback qui sera appelé lorsqu'on va cliquer sur le bouton submit
+                        );
+    //On ajoute les sections pour paramétrer les pages de login et d'administration 
+add_settings_section(
+                    'exercice_plugin_section_login', //id de la section qui sera utilisé pour afficher les champs
+                    'personnalisation de la page de login', //Nom de la section
+                    'exercice_plugin_callback_section_login', //la fonction callback a afficher la section
+                    'exercice_plugin', //Page dans laquelle afficher cette section
+                    );
+add_settings_section(
+                    'exercice_plugin_section_admin', //id de la section qui sera utilisé pour afficher les champs
+                    'personnalisation de la page de admin', //Nom de la section
+                    'exercice_plugin_callback_section_admin', //la fonction callback a afficher la section
+                    'exercice_plugin', //Page dans laquelle afficher cette section
+                    );
+}
+
+    //On va definir la fonction callback
+function exercice_plugin_callback_validate_option($input) {
+        //Valide et insert les données dans la base de données WordPress
+    wp_die('ici on récupere les données');
+    return $input;
+}
+    //On enregistre la fonction exercice_plugin_register_setting() via le hook admin_init
+add_action('admin_init', 'exercice_plugin_register_setting');
+
+
