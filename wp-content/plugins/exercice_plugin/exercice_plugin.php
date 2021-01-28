@@ -222,4 +222,16 @@ if (!defined('ABSPATH')){
     //On enregistre la fonction exercice_plugin_register_setting() via le hook admin_init
 add_action('admin_init', 'exercice_plugin_register_setting');
 
+//On va definir les valeurs par defaut pour les paramètres de notre plugin
+function exercice_plugin_option_default(){
+    return array(
+                 'my_url' => 'http://localhost/wordpress',
+                 'my_tile' => 'mon_site',
+                 'my_field' => 'desactiver',
+                 'my_message' => '<p class="message">mon message</p>',
+                 'my_footer' => 'message personnalisé',
+                 'my_toolbar' => false,
+                 'my_schema' => 'default'
+                );
+}
 
