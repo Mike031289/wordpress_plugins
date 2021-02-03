@@ -100,7 +100,7 @@ if (!defined('ABSPATH')){
     function exercice_plugin_register_setting(){
         register_setting(
                             'exercice_plugin_options', //represente le goupe d'options défini dans settings_fields('exercice_plugin_options')
-                            'exercice_plugin_options', //nom pour netrouver les options dans la base de données
+                            'exercice_plugin_options', //nom pour retrouver les options dans la base de données
                             'exercice_plugin_callback_validate_option' //fonction de callback qui sera appelé lorsqu'on va cliquer sur le bouton submit
                             );
         //On ajoute les sections pour paramétrer les pages de login et d'administration 
@@ -180,7 +180,7 @@ if (!defined('ABSPATH')){
         //On va definir la fonction callback
     function exercice_plugin_callback_validate_option($input) {
             //Valide et insert les données dans la base de données WordPress
-        wp_die('ici on récupere les données');
+        // wp_die('ici on récupere les données');
         return $input;
 }
         // On definie les fonction callback qui vont afficher les section (section login & section admin)
@@ -196,27 +196,111 @@ if (!defined('ABSPATH')){
     //On definie les fonctions de callback pour afficher les champs
     function exercice_plugin_callback_field_text($args){
         // Ici on récuperera les arguments transmis par la fonction add_settings_field() et on construira le champ.
-        echo 'Ce sera une zone de texte';
+        //Dans un premier temps, on doit rechercher dans la bd si les valeurs ont été sauvegardées pour les récupérer et les afficher.Si aucune valeur n'a été enregistré préablement on récupère les valeurs par defaut pour les afficher 
+        $options = get_option('exercice_plugin_options', exercice_plugin_option_default());
+        //Nous allons recuperer les valeurs id et label que nous avons passé à la methode de callback
+     
+        //On teste si $args['id'] existe. Si oui alors $id = $args['id'] si non $id = '';
+        $id=isset($args['id']) ? $args['id'] : '';
+        $label=isset($args['label']) ? $args['label'] : '';
+        //On nétoye le champ $options[$id] pour éviter les attaques(pareil que htmlspecialchars)
+       $value =isset($options[$id]) ? sanitize_text_field($options[$id]) : '';
+    //    var_dump($options);
+    //    wp_die();
+       echo '<input id="exercice_plugin_options_'.$id.'"  name="exercice_plugin_options['.$id.']"  type="text" size="40" value="'.$value.'"><br/>';
+       echo '<label for="exercice_plugin_options_'.$id.'" >'.$label.'</label>';
     }
     //On definie les fonctions de callback pour afficher les champs
     function exercice_plugin_callback_field_textarea($args){
-        // Ici on récuperera les arguments transmis par la fonction add_settings_field() et on construira le champ.
-        echo 'Une zone de saisie (textarea)';
+       // Ici on récuperera les arguments transmis par la fonction add_settings_field() et on construira le champ.
+        //Dans un premier temps, on doit rechercher dans la bd si les valeurs ont été sauvegardées pour les récupérer et les afficher.Si aucune valeur n'a été enregistré préablement on récupère les valeurs par defaut pour les afficher 
+        $options = get_option('exercice_plugin_options', exercice_plugin_option_default());
+        //Nous allons recuperer les valeurs id et label que nous avons passé à la methode de callback
+     
+        //On teste si $args['id'] existe. Si oui alors $id = $args['id'] si non $id = '';
+        $id=isset($args['id']) ? $args['id'] : '';
+        $label=isset($args['label']) ? $args['label'] : '';
+        //On nétoye le champ $options[$id] pour éviter les attaques(pareil que htmlspecialchars)
+       $value =isset($options[$id]) ? sanitize_text_field($options[$id]) : '';
+        echo '<textarea class="regular-text" rows="6" name="exercice_plugin_options['.$id.']" value="'.$value.'"></textarea></br>';
+        '<span> esc_html( '.$args.'["description"] )</span>';
+        echo '<label for="exercice_plugin_options_'.$id.'" >'.$label.'</label>';
+    
     }
     //On definie les fonctions de callback pour afficher les champs
     function exercice_plugin_callback_field_radio($args){
-        // Ici on récuperera les arguments transmis par la fonction add_settings_field() et on construira le champ.
-        echo 'Une zone de bouton radio';
+         // Ici on récuperera les arguments transmis par la fonction add_settings_field() et on construira le champ.
+        //Dans un premier temps, on doit rechercher dans la bd si les valeurs ont été sauvegardées pour les récupérer et les afficher.Si aucune valeur n'a été enregistré préablement on récupère les valeurs par defaut pour les afficher 
+        $options = get_option('exercice_plugin_options', exercice_plugin_option_default());
+        //Nous allons recuperer les valeurs id et label que nous avons passé à la methode de callback
+     
+        //On teste si $args['id'] existe. Si oui alors $id = $args['id'] si non $id = '';
+        $id=isset($args['id']) ? $args['id'] : '';
+        $label=isset($args['label']) ? $args['label'] : '';
+        //On nétoye le champ $options[$id] pour éviter les attaques(pareil que htmlspecialchars)
+       $selected =isset($options[$id]) ? sanitize_text_field($options[$id]) : '';
+        //On va definir un area avec toutes les options possibles
+       $radio_options = array(
+                               'enable' => 'activer style personnalisé',
+                               'disable' => 'desactiver style personnalisé',
+                            );
+        //On va parcourir les options et créer les boutons radio
+        foreach ($radio_options as $value => $label){
+            //Nous allons recuperer la valeur du bouton radio
+            $checked = checked($selected === $value, true, false);
+            echo '<label><input name="exercice_plugin_options['.$id.']"  type="radio" value="'.$value.'"'.$checked.'>';
+            echo '<span>' .$label. '</span></label></br>';
+        }
     }
     //On definie les fonctions de callback pour afficher les champs
     function exercice_plugin_callback_field_checkbox($args){
         // Ici on récuperera les arguments transmis par la fonction add_settings_field() et on construira le champ.
-        echo 'Une zone de case à cocher (checkbox)';
-    }
+        //Dans un premier temps, on doit rechercher dans la bd si les valeurs ont été sauvegardées pour les récupérer et les afficher.Si aucune valeur n'a été enregistré préablement on récupère les valeurs par defaut pour les afficher 
+        $options = get_option('exercice_plugin_options', exercice_plugin_option_default());
+        //Nous allons recuperer les valeurs id et label que nous avons passé à la methode de callback
+     
+        //On teste si $args['id'] existe. Si oui alors $id = $args['id'] si non $id = '';
+        $id=isset($args['id']) ? $args['id'] : '';
+        $label=isset($args['label']) ? $args['label'] : '';
+        //On nétoye le champ $options[$id] pour éviter les attaques(pareil que htmlspecialchars)
+       $value =isset($options[$id]) ? sanitize_text_field($options[$id]) : '';
+       $checked = (bool) $options['id'] ?: false;
+        echo '<input type="checkbox" name="exercice_plugin_options['.$id.']" checked('.$checked.')';
+        echo '<span>' .$label. '</span></label></br>';
+   }
+   
     //On definie les fonctions de callback pour afficher les champs
     function exercice_plugin_callback_field_select($args){
         // Ici on récuperera les arguments transmis par la fonction add_settings_field() et on construira le champ.
-        echo 'Une zone de liste déroulante (select)';
+          //Dans un premier temps, on doit rechercher dans la bd si les valeurs ont été sauvegardées pour les récupérer et les afficher.Si aucune valeur n'a été enregistré préablement on récupère les valeurs par defaut pour les afficher 
+          $options = get_option('exercice_plugin_options', exercice_plugin_option_default());
+          //Nous allons recuperer les valeurs id et label que nous avons passé à la methode de callback
+       
+          //On teste si $args['id'] existe. Si oui alors $id = $args['id'] si non $id = '';
+          $id=isset($args['id']) ? $args['id'] : '';
+          $label=isset($args['label']) ? $args['label'] : '';
+          //On nétoye le champ $options[$id] pour éviter les attaques(pareil que htmlspecialchars)
+         $value =isset($options[$id]) ? sanitize_text_field($options[$id]) : '';
+        //  $select_options = array(
+        //     'selected' => 'schema personnalisée',
+        //     'option' => '',
+        //  );
+        // foreach ($options as $value => $label ) {
+         echo'<select name="exercice_plugin_options['.$id.']"> <option value="'.$value.'">'.$id.'</option></select></br>';
+        echo '<span>' .$label. '</span></label></br>';
+        //  }
+       /* 
+        $settings  = get_option( 'settings_boilerplate_multiple_settings' );
+        $selected = ! empty( $settings['settings_boilerplate_select_field'] ) ? $settings['settings_boilerplate_select_field'] : '';
+        ?>
+            <select name="settings_boilerplate_multiple_settings[settings_boilerplate_select_field]">
+                <option value=""><?php esc_html_e( 'Choose an option', 'settings-boilerplate' ); ?></option>
+                <!-- I'm getting values from passed in array of options here, for a change. -->
+                <?php foreach ( $args['options'] as $value => $label ) : ?>
+                    <option value="<?php echo esc_attr( $value ); ?>" <?php selected( $selected, $value ); ?>><?php echo esc_html( $label ); ?></option>
+                <?php endforeach; ?>
+            </select>
+        <?php*/
     }
 
     //On enregistre la fonction exercice_plugin_register_setting() via le hook admin_init
@@ -226,7 +310,7 @@ add_action('admin_init', 'exercice_plugin_register_setting');
 function exercice_plugin_option_default(){
     return array(
                  'my_url' => 'http://localhost/wordpress',
-                 'my_tile' => 'mon_site',
+                 'my_title' => 'mon_site',
                  'my_field' => 'desactiver',
                  'my_message' => '<p class="message">mon message</p>',
                  'my_footer' => 'message personnalisé',

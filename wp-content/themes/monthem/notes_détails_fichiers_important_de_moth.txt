@@ -1,0 +1,47 @@
+Fichiers principaux d'un theème wordpress :
+
+404.php : affiche une erreur,quand une page n'a pas eté trouvée;
+archive.php : templete pour afficher les archives par mois, par etiquettes, par categories,etc;
+comments.php : templete pour afficher les commentaires;
+footer.php : permet de personnaliser l'affichage du pied de page;
+functions.php : fichiers de personnalisation du theme, !important;
+style.css : fichiers de personnalisation du theme(css), !important;
+header.php : permet de personnaliser l'affichage de l'en tete de page;
+index.php : permet de gerer l'affichage de la page d'accueil;
+dossier inc : contient une serie de fichier inclu qui permet divers personnalisation : customizer, ou la personnalisation des entetes
+dossier js : contient une serie de fichier javascript
+dossier languages : permet de traduire le theme (!on doit utiliser le logiciel poedit)
+dossier template-parts : permet d'afficher les templates secondaires
+screenshot.png : ecran du theme de l'application;
+sidebar.php : pour personnaliser l'affichage de la sidebar;
+search.php : pour personnaliser l'affichage des resultats de recherche
+single.php : templete pour afficher le contenu des articles;
+content-none.php : affichage des pages sans contenu;
+content-page.php : affichage pour le contenu des pages;
+content-search : affichage du contenu des resultats,
+content.php : affichage du contenu des articles.
+
+!important :
+1 - Avant de personnaliser, il faut reperer la structure du thème (inspecter element dans pages web)
+<div id="page" class="site">
+2 - Header:
+<header id="masthead" class="site-header">
+    <div class="site-branding">
+            <h1 class="site-title"><a href="http://localhost/wordpress/" rel="home">Formation Full-stack et DevOps</a></h1>
+            <p class="site-description">Le Paradis des développeurs</p>
+    </div>
+    <nav id="site-navigation" class="main-navigation">
+                        <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">Primary Menu</button>
+                        <div id="primary-menu" class="menu">
+                <ul class="nav-menu">
+                    <li class="page_item page-item-2 current_page_parent"><a href="http://localhost/wordpress/page-d-exemple/">Page d’exemple</a></li>
+                </ul>
+            </div>
+        </nav><!-- #site-navigation -->
+</header>
+3- Corps
+<main id="primary" class="site-main">
+    -les articles;
+<aside id="secondary" class="widget-area">
+
+<footer id="colophon" class="site-footer">
