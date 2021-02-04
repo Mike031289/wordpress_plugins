@@ -146,6 +146,8 @@ function monthem_scripts() {
 	wp_enqueue_style( 'monthem-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_style_add_data( 'monthem-style', 'rtl', 'replace' );
 
+	// wp_enqueue_style( 'monthem-style-pacifico-font', //fonts.googleapis.com/css2?family=Pacifico&display=swap, array(), _S_VERSION );
+
 	wp_enqueue_script( 'monthem-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {

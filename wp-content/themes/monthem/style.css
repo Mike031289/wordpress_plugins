@@ -993,3 +993,18 @@ textarea {
 	background-color:#000;
 	background-size: cover;
 	}
+.main-navigation{
+	background-color:#000;
+}
+.main-navigation li{
+	margin-right: 3.80em;
+	padding:0.75rem;
+}
+.main-navigation li a{
+	color:#fff;
+}
+h1{
+	font-family: Pacifico, cursive;
+	font-weight: 400;
+	font-size:3em;
+}
